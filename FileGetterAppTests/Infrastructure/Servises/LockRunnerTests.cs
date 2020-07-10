@@ -42,7 +42,7 @@ namespace FileGetterAppTests.Infrastructure.Servises
         }
 
         [Test]
-        public async Task LockRunAsync_WhenEqualKey_ThenRunSeries()
+        public async Task LockRunAsync_WhenEqualKey_ThenRunSeq()
         {
             var keys = new[] { "1", "1", "1" };
 

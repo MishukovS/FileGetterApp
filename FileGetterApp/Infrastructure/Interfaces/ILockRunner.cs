@@ -7,7 +7,7 @@ namespace FileGetterApp.Infrastructure.Interfaces
     public interface ILockRunner
     {
         /// <summary>
-        /// Позволяет выполнить эксклюзивно произвольную функцию,
+        /// Позволяет выполнить последовательно произвольную функцию,
         /// если функция с переданным ключем в данный момент выполняется, то ожидаем её завершения
         /// </summary>     
         /// <param name="key">имя ключа</param>

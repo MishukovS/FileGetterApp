@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.1082
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileGetterApp", "FileGetterApp\FileGetterApp.csproj", "{822AC02C-F925-4180-A087-108C433311C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileGetterAppTests", "FileGetterAppTests\FileGetterAppTests.csproj", "{1A2D2B92-6DFE-471B-ABEF-35B8D2F99532}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileGetterAppTests", "FileGetterAppTests\FileGetterAppTests.csproj", "{1A2D2B92-6DFE-471B-ABEF-35B8D2F99532}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

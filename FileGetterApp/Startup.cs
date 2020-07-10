@@ -26,6 +26,8 @@ namespace TestFileReaderApp
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton<ILockRunner, LockRunner>();
             services.AddSingleton<IFileGetter, FileGetter>();
+            services.AddSingleton<ILongRunningReader, LongRunningReader>();
+            services.AddSingleton<IFileGetterWithCache, FileGetterWithCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
