@@ -19,7 +19,7 @@ namespace FileGetterApp.Business.Servises
         public byte[] Get(string fileName)
         {            
             readers.AddOrUpdate(fileName, 1, (k, v) => v++);
-            var result = cache.GetOrAdd(fileName, id => new Lazy<byte[]>(() => fileReader.Read(id))).Value;
+            var result = cache.GetOrAdd(fileName, id => new Lazy<byte[]>(() => ReadFile(id))).Value;
             readers.AddOrUpdate(fileName, 0, (k, v) => v--);
 
             bool isRemove = !readers.TryGetValue(fileName, out int count) || count <= 0;
@@ -28,6 +28,12 @@ namespace FileGetterApp.Business.Servises
                 cache.TryRemove(fileName, out var str);
             }
             return result;
+        }
+
+        private byte[] ReadFile(string id)
+        {
+            var data = fileReader.ReadAsync(id).GetAwaiter().GetResult();
+            return data;
         }
     }
 }

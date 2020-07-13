@@ -1,14 +1,14 @@
 ﻿using FileGetterApp.Business.Interfases;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace FileGetterApp.Business.Servises
 {
     public class LongRunningReader : ILongRunningReader
     {
-        public byte[] Read(string fileName)
+        public async Task<byte[]> ReadAsync(string fileName)
         {
-            Thread.Sleep(2000);
+            await Task.Delay(2000);
             var text = "Тут много букв...";
             return Encoding.UTF8.GetBytes(text);
         }

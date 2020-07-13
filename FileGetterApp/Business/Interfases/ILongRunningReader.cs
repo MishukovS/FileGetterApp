@@ -1,7 +1,9 @@
-﻿namespace FileGetterApp.Business.Interfases
+﻿using System.Threading.Tasks;
+
+namespace FileGetterApp.Business.Interfases
 {
     public interface ILongRunningReader
     {
-        byte[] Read(string fileName);
+        Task<byte[]> ReadAsync(string fileName);
     }
 }

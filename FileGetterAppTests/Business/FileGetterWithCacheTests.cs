@@ -27,7 +27,7 @@ namespace FileGetterAppTests.Business
             var threads = names.Select(x => new Thread(() => fileGetterWithCache.Get(x))).ToList();
             threads.ForEach(x => x.Start());
 
-            readerMock.Verify(x => x.Read(It.IsAny<string>()), Times.Once);
+            readerMock.Verify(x => x.ReadAsync(It.IsAny<string>()), Times.Once);
         }
 
         [Test]
@@ -37,7 +37,17 @@ namespace FileGetterAppTests.Business
             var threads = names.Select(x => new Thread(() => fileGetterWithCache.Get(x))).ToList();
             threads.ForEach(x => x.Start());
 
-            readerMock.Verify(x => x.Read(It.IsAny<string>()), Times.AtLeast(5));
+            readerMock.Verify(x => x.ReadAsync(It.IsAny<string>()), Times.AtLeast(5));
+        }
+
+        [Test]
+        public void Get_WhenDifferentAndEqualName_ThenForEachUniqueName()
+        {
+            var names = new List<string> { "1", "2", "1", "2", "3" };
+            var threads = names.Select(x => new Thread(() => fileGetterWithCache.Get(x))).ToList();
+            threads.ForEach(x => x.Start());
+
+            readerMock.Verify(x => x.ReadAsync(It.IsAny<string>()), Times.AtLeast(3));
         }
     }
 }
