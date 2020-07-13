@@ -1,7 +1,5 @@
 ﻿using FileGetterApp.Business.Interfases;
 using FileGetterApp.Business.Servises;
-using FileGetterApp.Infrastructure.Interfaces;
-using FileGetterApp.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,11 +21,10 @@ namespace TestFileReaderApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSingleton<ILockRunner, LockRunner>();
-            services.AddSingleton<IFileGetter, FileGetter>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);            
             services.AddSingleton<ILongRunningReader, LongRunningReader>();
             services.AddSingleton<IFileGetterWithCache, FileGetterWithCache>();
+            services.AddSingleton<IFileGetterWithQueue, FileGetterWithQueue>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

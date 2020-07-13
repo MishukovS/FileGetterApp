@@ -8,17 +8,18 @@ namespace TestFileReaderApp.Controllers
     public class FileController : ControllerBase
     {
         private readonly string contentType = "text/plain";
-        private readonly IFileGetter fileGetter;
+        private readonly IFileGetterWithQueue fileGetterWithQueue;
         private readonly IFileGetterWithCache fileGetterWithCache;
 
-        public FileController(IFileGetter fileGetter, IFileGetterWithCache fileGetterWithCache)
+        public FileController(IFileGetterWithQueue fileGetterWithQueue, IFileGetterWithCache fileGetterWithCache)
         {
-            this.fileGetter = fileGetter;
+            this.fileGetterWithQueue = fileGetterWithQueue;
             this.fileGetterWithCache = fileGetterWithCache;
         }
 
         /// <summary>
-        /// Получает данные из файла, если файл в данный момент читается то берется результат чтения из другого потока 
+        /// Получает данные из файла, если файл в данный момент читается то берется результат чтения из другого потока
+        /// используется кэш с ленивой инициализацией
         /// </summary>       
         [HttpGet("Get")]
         public IActionResult Get(string filename)
@@ -33,17 +34,18 @@ namespace TestFileReaderApp.Controllers
         }
 
         /// <summary>
-        /// Получает данные из файла, без конкурентного доступа к одному и тому же файлу
-        /// </summary>       
-        [HttpGet("GetSeq")]
-        public async Task<IActionResult> GetSeqAsync(string filename)
+        /// Получает данные из файла, если файл в данный момент читается то берется результат чтения из другого потока
+        /// используется Dataflow
+        /// </summary>        
+        [HttpGet("GetAsync")]
+        public async Task<IActionResult> GetAsync(string filename)
         {
             if (string.IsNullOrWhiteSpace(filename))
             {
                 return BadRequest("filename is empty");
             }
 
-            var fileData = await fileGetter.GetAsync(filename);
+            var fileData = await fileGetterWithQueue.GetAsync(filename);
             return File(fileData, contentType, filename);
         }
     }
